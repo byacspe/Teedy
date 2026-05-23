@@ -58,7 +58,7 @@ pipeline {
             archiveArtifacts artifacts: '**/target/*.jar',
                              fingerprint: true
 
-            archiveArtifacts artifacts: '**/target/site/**/*.*',
+            archiveArtifacts artifacts: '**/target/reports/**/*.*',
                              allowEmptyArchive: true,
                              fingerprint: true
         }
