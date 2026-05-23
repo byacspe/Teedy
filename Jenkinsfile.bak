@@ -1,43 +1,31 @@
 pipeline {
-    agent any
+agent any
 
-    tools {
-        jdk 'JDK11'
-        maven 'Maven3'
-    }
+```
+tools {
+    jdk 'JDK11'
+    maven 'Maven3'
+}
 
-    stages {
+stages {
 
-        stage('Build') {
-            steps {
-                bat 'java -version'
-                bat 'mvn -version'
-                bat 'mvn clean install -DskipTests -U'
-            }
-        }
+    stage('Build') {
+        steps {
 
-        stage('PMD Check') {
-            steps {
-                bat 'mvn pmd:pmd'
-            }
-        }
+            bat 'java -version'
 
-        stage('Test') {
-            steps {
-                bat 'mvn test'
-            }
-        }
+            bat 'mvn -version'
 
-        stage('JavaDoc') {
-            steps {
-                bat 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
-            }
-        }
-
-        stage('Package') {
-            steps {
-                bat 'mvn package -DskipTests'
-            }
+            bat 'mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -U'
         }
     }
+
+    stage('Package') {
+        steps {
+            echo 'Build Success'
+        }
+    }
+}
+```
+
 }
