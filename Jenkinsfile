@@ -59,6 +59,7 @@ pipeline {
                              fingerprint: true
 
             archiveArtifacts artifacts: '**/target/site/**/*.*',
+                             allowEmptyArchive: true,
                              fingerprint: true
         }
     }
