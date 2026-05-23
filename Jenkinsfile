@@ -16,31 +16,31 @@ pipeline {
 
         stage('Compile') {
             steps {
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('PMD Check') {
             steps {
-                sh 'mvn pmd:pmd'
+                bat 'mvn pmd:pmd'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                sh 'mvn package'
+                bat 'mvn package'
             }
         }
 
         stage('Generate JavaDoc') {
             steps {
-                sh 'mvn javadoc:javadoc'
+                bat 'mvn javadoc:javadoc'
             }
         }
     }
