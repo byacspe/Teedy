@@ -10,13 +10,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean compile'
+                bat 'mvn clean install -DskipTests -U'
             }
         }
 
         stage('PMD Check') {
             steps {
-                bat 'mvn pmd:pmd'
+                bat 'mvn clean install pmd:pmd -DskipTests -U'
             }
         }
 
