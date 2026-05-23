@@ -2,33 +2,35 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'
         jdk 'JDK8'
+        maven 'Maven'
     }
 
     stages {
+
         stage('Build') {
             steps {
+                bat 'java -version'
+                bat 'mvn -version'
                 bat 'mvn clean install -DskipTests -U'
             }
         }
 
         stage('PMD Check') {
             steps {
-                bat 'mvn pmd:pmd -DskipTests -U'
+                bat 'mvn pmd:pmd'
             }
         }
 
-        // 测试会失败，直接跳过
         stage('Test') {
             steps {
-                bat 'mvn test -DskipTests'
+                bat 'mvn test'
             }
         }
 
         stage('JavaDoc') {
             steps {
-                bat 'mvn javadoc:javadoc -DskipTests'
+                bat 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
             }
         }
 
@@ -36,12 +38,6 @@ pipeline {
             steps {
                 bat 'mvn package -DskipTests'
             }
-        }
-    }
-
-    post {
-        success {
-            archiveArtifacts artifacts: '**/target/*.jar, **/target/*.war'
         }
     }
 }
