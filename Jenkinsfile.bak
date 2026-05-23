@@ -1,29 +1,55 @@
 pipeline {
-agent any
+    agent any
 
-tools {
-    jdk 'JDK11'
-    maven 'Maven3'
-}
+    tools {
+        maven 'Maven3'
+        jdk 'JDK17'
+    }
 
-stages {
+    stages {
 
-    stage('Build') {
-        steps {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/sustech-cs304/Teedy.git'
+            }
+        }
 
-            bat 'java -version'
+        stage('Compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
 
-            bat 'mvn -version'
+        stage('PMD Check') {
+            steps {
+                sh 'mvn pmd:pmd'
+            }
+        }
 
-            bat 'mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -U'
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+
+        stage('Generate JavaDoc') {
+            steps {
+                sh 'mvn javadoc:javadoc'
+            }
         }
     }
 
-    stage('Package') {
-        steps {
-            echo 'Build Success'
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            archiveArtifacts artifacts: 'target/site/**/*.*', fingerprint: true
         }
     }
-}
-
 }
