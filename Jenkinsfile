@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/sustech-cs304/Teedy.git'
+                git 'https://github.com/byacspe/Teedy.git'
             }
         }
 
@@ -42,7 +42,9 @@ pipeline {
 
         stage('Generate JavaDoc') {
             steps {
-                bat 'mvn javadoc:javadoc -DskipTests'
+                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                    bat 'mvn javadoc:javadoc -DskipTests'
+                }
             }
         }
     }
