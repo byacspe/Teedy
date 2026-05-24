@@ -30,17 +30,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-m2
 
-    - name: Compile
-      run: mvn clean compile
+    - name: Compile & Install
+      run: mvn clean install -DskipTests
 
     - name: PMD Check
       run: mvn pmd:pmd
 
     - name: Run Tests
       run: mvn test
-
-    - name: Package
-      run: mvn package -DskipTests
 
     - name: Generate JavaDoc
       run: mvn javadoc:javadoc -DskipTests
