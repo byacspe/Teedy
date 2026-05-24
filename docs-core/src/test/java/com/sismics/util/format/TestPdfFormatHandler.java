@@ -18,11 +18,22 @@ public class TestPdfFormatHandler extends BaseTest {
      */
     @Test
     public void testIssue373() throws Exception {
+        org.junit.Assume.assumeTrue("Tesseract not available, skipping OCR-dependent test", isTesseractAvailable());
         PdfFormatHandler formatHandler = new PdfFormatHandler();
         String content = formatHandler.extractContent("deu", Paths.get(getResource("issue373.pdf").toURI()));
         Assert.assertTrue(content.contains("Aufrechterhaltung"));
         Assert.assertTrue(content.contains("Außentemperatur"));
         Assert.assertTrue(content.contains("Grundumsatzmessungen"));
         Assert.assertTrue(content.contains("ermitteln"));
+    }
+
+    private static boolean isTesseractAvailable() {
+        try {
+            Process process = new ProcessBuilder("tesseract", "--version").start();
+            process.waitFor();
+            return process.exitValue() == 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -67,6 +67,7 @@ public class TestFileUtil extends BaseTest {
 
     @Test
     public void extractContentScannedPdf() throws Exception {
+        org.junit.Assume.assumeTrue("Tesseract not available, skipping OCR test", isTesseractAvailable());
         Path path = Paths.get(getResource("scanned.pdf").toURI());
         FormatHandler formatHandler = FormatHandlerUtil.find(MimeTypeUtil.guessMimeType(path, FILE_PDF_SCANNED));
         Assert.assertNotNull(formatHandler);
@@ -138,6 +139,16 @@ public class TestFileUtil extends BaseTest {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             PdfUtil.convertToPdf(documentDto, Lists.newArrayList(file0, file1, file2, file3, file4, file5), true, true, 10, outputStream);
             Assert.assertTrue(outputStream.toByteArray().length > 0);
+        }
+    }
+
+    private static boolean isTesseractAvailable() {
+        try {
+            Process process = new ProcessBuilder("tesseract", "--version").start();
+            process.waitFor();
+            return process.exitValue() == 0;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

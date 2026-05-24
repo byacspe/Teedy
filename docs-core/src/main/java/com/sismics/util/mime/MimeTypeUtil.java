@@ -30,6 +30,10 @@ public class MimeTypeUtil {
             return MimeType.DEFAULT;
         }
 
+        if ("application/vnd.ms-excel".equals(mimeType) && name != null && name.toLowerCase().endsWith(".csv")) {
+            return MimeType.TEXT_CSV;
+        }
+
         return mimeType;
     }
     
