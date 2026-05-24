@@ -21,7 +21,7 @@ A demo is available at [demo.teedy.io](https://demo.teedy.io)
 
 - Guest login is enabled with read access on all documents
 - "admin" login with "admin" password
-- "demo" login with "password" password 
+- "demo" login with "password" password
 
 # Features
 
@@ -52,7 +52,6 @@ A demo is available at [demo.teedy.io](https://demo.teedy.io)
 - Fully featured Android client
 - [Bulk files importer](https://github.com/sismics/docs/tree/master/docs-importer) (single or scan mode)
 - Tested to one million documents
-
 
 # Native Installation
 
@@ -94,7 +93,6 @@ It is highly recommended that you proceed to install Windows Subsystem Linux (WS
 
 **Note**: This would mean that you should proceed to execute the following instructions within the Linux environment as well.
 
-
 ## How to build Teedy from the sources
 
 Prerequisites: JDK 11, Maven 3, NPM, Grunt, Tesseract 4
@@ -134,11 +132,7 @@ mvn -Pprod -DskipTests clean install
 
 You will get your deployable WAR in the `docs-web/target` directory.
 
-# Contributing
-
-All contributions are more than welcomed. Contributions may close an issue, fix a bug (reported or not reported), improve the existing code, add new feature, and so on.
-
-The `master` branch is the default and base branch for the project. It is used for development and all Pull Requests should go there.
+<br />
 
 # License
 
